@@ -10,6 +10,9 @@ require('@fortawesome/fontawesome-free');
 
 window.Vue = require('vue');
 
+import Gate from "./Gate";
+Vue.prototype.$gate = new Gate(window.user);
+
 import { Form, HasError, AlertError } from 'vform';
 
 import moment from 'moment';
@@ -55,7 +58,8 @@ let routes = [
     { path: '/dashboard', component: require('./components/Dashboard.vue').default },
     { path: '/developer', component: require('./components/Developer.vue').default },
     { path: '/users', component: require('./components/Users.vue').default },
-    { path: '/profile', component: require('./components/Profile.vue').default }
+    { path: '/profile', component: require('./components/Profile.vue').default },
+    { path: '*', component: require('./components/Not_Found.vue').default }
 ]
 
 let router = new VueRouter({
@@ -64,7 +68,7 @@ let router = new VueRouter({
     linkActiveClass: 'active'
 })
 
-window.Fire = new Vue;
+window.newVueInstance = new Vue;
 
 Vue.filter('upCase', function (text) {
     return text.charAt(0).toUpperCase() + text.slice(1)
@@ -101,6 +105,11 @@ Vue.component(
     'passport-personal-access-tokens',
     require('./components/passport/PersonalAccessTokens.vue').default
 );
+
+Vue.component(
+    'not-found',
+    require('./components/Not_Found.vue').default
+);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -109,5 +118,13 @@ Vue.component(
 
 const app = new Vue({
     el: '#app',
-    router
+    router,
+    data: {
+        search: ''
+    },
+    methods:{
+      searchit(){
+            newVueInstance.$emit('searching', this.search);
+        }
+    }
 });

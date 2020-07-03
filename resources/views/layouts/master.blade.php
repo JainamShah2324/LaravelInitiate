@@ -29,9 +29,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         <!-- SEARCH FORM -->
         <div class="input-group input-group-sm">
-            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+            <input class="form-control form-control-navbar" @keyup.enter="searchit" v-model="search" type="search" placeholder="Search" aria-label="Search">
             <div class="input-group-append">
-                <button class="btn btn-navbar">
+                <button class="btn btn-navbar" @click="searchit">
                     <i class="fa fa-search"></i>
                 </button>
             </div>
@@ -80,7 +80,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </router-link>
                     </li>
 
-
+                    @can('isAdminOrAuthor')
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fa fa-cog green"></i>
@@ -100,14 +100,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </ul>
                         </li>
 
-                        <li class="nav-item">
-                            <router-link to="/developer" class="nav-link">
-                                <i class="nav-icon fas fa-cogs"></i>
-                                <p>
-                                    Developer
-                                </p>
-                            </router-link>
-                        </li>
+                        @can('isAdmin')
+                            <li class="nav-item">
+                                <router-link to="/developer" class="nav-link">
+                                    <i class="nav-icon fas fa-cogs"></i>
+                                    <p>
+                                        Developer
+                                    </p>
+                                </router-link>
+                           </li>
+                        @endcan
+                    @endcan
 
                     <li class="nav-item">
                         <router-link to="/profile" class="nav-link">
