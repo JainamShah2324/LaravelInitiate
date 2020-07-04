@@ -122,9 +122,9 @@ const app = new Vue({
     data: {
         search: ''
     },
-    methods:{
-      searchit(){
+    methods: {
+        searchit: _.debounce( function () {
             newVueInstance.$emit('searching', this.search);
-        }
+        }, 1000 )
     }
 });

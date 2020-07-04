@@ -29,7 +29,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         <!-- SEARCH FORM -->
         <div class="input-group input-group-sm">
-            <input class="form-control form-control-navbar" @keyup.enter="searchit" v-model="search" type="search" placeholder="Search" aria-label="Search">
+            <input class="form-control form-control-navbar" @keyup="searchit" v-model="search" type="search" placeholder="Search" aria-label="Search">
             <div class="input-group-append">
                 <button class="btn btn-navbar" @click="searchit">
                     <i class="fa fa-search"></i>
@@ -96,7 +96,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <p>Users</p>
                                     </router-link>
                                 </li>
-
                             </ul>
                         </li>
 
@@ -161,10 +160,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <footer class="main-footer">
         <!-- To the right -->
         <div class="float-right d-none d-sm-inline">
-            Anything you want
+               Anything you want
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2014-2018 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2020 Laravel Initiate.</strong> All rights reserved.
     </footer>
 </div>
 <!-- ./wrapper -->

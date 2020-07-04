@@ -48,6 +48,9 @@ class UserController extends Controller
                           ->orWhere("type", "LIKE", "%$search%");
                 })->paginate(10);
             }
+            else{
+                $user = User::latest()->paginate(10);
+            }
             return $user;
         }
     }

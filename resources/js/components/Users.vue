@@ -43,23 +43,30 @@
                 <!-- /.box -->
             </div>
             <!-- Pagination-->
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item" v-bind:class="[{ disabled: !pagination.prev_page_url }]">
-                        <a class="page-link" href="#" @click="loadUsers(pagination.prev_page_url)">
-                            Previous
-                        </a>
-                    </li>
+            <div class="row w-100">
+                <div class="col-10">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item" v-bind:class="[{ disabled: !pagination.prev_page_url }]">
+                                <a class="page-link" href="#" @click="loadUsers(pagination.prev_page_url)">
+                                    Previous
+                                </a>
+                            </li>
 
-                    <li class="page-item disabled"><a class="page-link text-dark" href="#">Page {{ pagination.current_page }} of {{ pagination.last_page }}</a></li>
+                            <li class="page-item disabled"><a class="page-link text-dark" href="#">Page {{ pagination.current_page }} of {{ pagination.last_page }}</a></li>
 
-                    <li class="page-item" v-bind:class="[{ disabled: !pagination.next_page_url }]">
-                        <a class="page-link" href="#" @click="loadUsers(pagination.next_page_url)">
-                            Next
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+                            <li class="page-item" v-bind:class="[{ disabled: !pagination.next_page_url }]">
+                                <a class="page-link" href="#" @click="loadUsers(pagination.next_page_url)">
+                                    Next
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-success" @click.prevent="print_me"><i class="fas fa-print"></i> Print</button>
+                </div>
+            </div>
             <!-- /.Pagination-->
         </div>
         <div class="mt-5" v-if="!$gate.isAdminOrAuthor()">
@@ -152,6 +159,10 @@
 
             editForm(user) {
                 this.$refs.newModal.editModal(user);
+            },
+
+            print_me() {
+                window.print();
             }
         },
 
@@ -159,7 +170,6 @@
             this.$Progress.start();
             newVueInstance.$on('searching', (search) => {
                 let query = search;
-                console.log('query : ' + query);
                 axios.get('api/findUser?q='+query)
                     .then(({data}) => {
                         this.users = data.data;

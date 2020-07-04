@@ -4809,6 +4809,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Profile",
@@ -4883,6 +4890,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     editForm: function editForm(user) {
       this.$refs.newModal.editModal(user);
+    },
+    print_me: function print_me() {
+      window.print();
     }
   },
   created: function created() {
@@ -4891,7 +4901,6 @@ __webpack_require__.r(__webpack_exports__);
     this.$Progress.start();
     newVueInstance.$on('searching', function (search) {
       var query = search;
-      console.log('query : ' + query);
       axios.get('api/findUser?q=' + query).then(function (_ref2) {
         var data = _ref2.data;
         _this3.users = data.data;
@@ -68753,78 +68762,106 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
-              _c("ul", { staticClass: "pagination" }, [
+            _c("div", { staticClass: "row w-100" }, [
+              _c("div", { staticClass: "col-10" }, [
                 _c(
-                  "li",
-                  {
-                    staticClass: "page-item",
-                    class: [{ disabled: !_vm.pagination.prev_page_url }]
-                  },
+                  "nav",
+                  { attrs: { "aria-label": "Page navigation example" } },
                   [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "page-link",
-                        attrs: { href: "#" },
-                        on: {
-                          click: function($event) {
-                            return _vm.loadUsers(_vm.pagination.prev_page_url)
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                        Previous\n                    "
+                    _c("ul", { staticClass: "pagination" }, [
+                      _c(
+                        "li",
+                        {
+                          staticClass: "page-item",
+                          class: [{ disabled: !_vm.pagination.prev_page_url }]
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "page-link",
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.loadUsers(
+                                    _vm.pagination.prev_page_url
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                Previous\n                            "
+                              )
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "page-item disabled" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "page-link text-dark",
+                            attrs: { href: "#" }
+                          },
+                          [
+                            _vm._v(
+                              "Page " +
+                                _vm._s(_vm.pagination.current_page) +
+                                " of " +
+                                _vm._s(_vm.pagination.last_page)
+                            )
+                          ]
                         )
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c("li", { staticClass: "page-item disabled" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "page-link text-dark",
-                      attrs: { href: "#" }
-                    },
-                    [
-                      _vm._v(
-                        "Page " +
-                          _vm._s(_vm.pagination.current_page) +
-                          " of " +
-                          _vm._s(_vm.pagination.last_page)
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "li",
+                        {
+                          staticClass: "page-item",
+                          class: [{ disabled: !_vm.pagination.next_page_url }]
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "page-link",
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.loadUsers(
+                                    _vm.pagination.next_page_url
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                Next\n                            "
+                              )
+                            ]
+                          )
+                        ]
                       )
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  {
-                    staticClass: "page-item",
-                    class: [{ disabled: !_vm.pagination.next_page_url }]
-                  },
-                  [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "page-link",
-                        attrs: { href: "#" },
-                        on: {
-                          click: function($event) {
-                            return _vm.loadUsers(_vm.pagination.next_page_url)
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                        Next\n                    "
-                        )
-                      ]
-                    )
+                    ])
                   ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-2" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.print_me($event)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fas fa-print" }), _vm._v(" Print")]
                 )
               ])
             ])
@@ -85777,9 +85814,9 @@ var app = new Vue({
     search: ''
   },
   methods: {
-    searchit: function searchit() {
+    searchit: _.debounce(function () {
       newVueInstance.$emit('searching', this.search);
-    }
+    }, 1000)
   }
 });
 
